@@ -1,0 +1,45 @@
+TASA: 1.0e-2
+	pesos       AND: [0.2,0.2,0.2]
+	iteraciones AND: 3
+	errores     AND: [(0.0,1.0),(1.0,1.0),(2.0,0.0)]
+
+	pesos       OR: [0.4,0.2,0.30000000000000004]
+	iteraciones OR: 3
+	errores     OR: [(0.0,3.0),(1.0,1.0),(2.0,0.0)]
+
+TASA: 0.1
+	pesos       AND: [0.2,0.2,0.2]
+	iteraciones AND: 3
+	errores     AND: [(0.0,1.0),(1.0,1.0),(2.0,0.0)]
+
+	pesos       OR: [0.4,0.2,0.30000000000000004]
+	iteraciones OR: 3
+	errores     OR: [(0.0,3.0),(1.0,1.0),(2.0,0.0)]
+
+TASA: 0.2
+	pesos       AND: [0.2,0.2,0.2]
+	iteraciones AND: 3
+	errores     AND: [(0.0,1.0),(1.0,1.0),(2.0,0.0)]
+
+	pesos       OR: [0.4,0.2,0.30000000000000004]
+	iteraciones OR: 3
+	errores     OR: [(0.0,3.0),(1.0,1.0),(2.0,0.0)]
+
+TASA: 0.5
+	pesos       AND: [0.2,0.2,0.2]
+	iteraciones AND: 3
+	errores     AND: [(0.0,1.0),(1.0,1.0),(2.0,0.0)]
+
+	pesos       OR: [0.4,0.2,0.30000000000000004]
+	iteraciones OR: 3
+	errores     OR: [(0.0,3.0),(1.0,1.0),(2.0,0.0)]
+
+TASA: 0.99
+	pesos       AND: [0.2,0.2,0.2]
+	iteraciones AND: 3
+	errores     AND: [(0.0,1.0),(1.0,1.0),(2.0,0.0)]
+
+	pesos       OR: [0.4,0.2,0.30000000000000004]
+	iteraciones OR: 3
+	errores     OR: [(0.0,3.0),(1.0,1.0),(2.0,0.0)]
+
