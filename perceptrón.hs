@@ -45,9 +45,9 @@ pregunta1_b = do
         appendFile "pregunta1_b.txt" $ "TASA: " ++ show t ++ "\n"
         forM [(conjunto_and, "AND"), (conjunto_or, "OR")] $ \(conjunto, nombre) -> do
             (pesos, errores) <- correrLector infoInicial { tasa = t } conjunto
-            appendFile "pregunta1_b.txt" $ "\tpesos       " ++ nombre ++ ": " ++ show pesos            ++ "\n"
-            appendFile "pregunta1_b.txt" $ "\titeraciones " ++ nombre ++ ": " ++ show (length errores) ++ "\n"
-            appendFile "pregunta1_b.txt" $ "\terrores     " ++ nombre ++ ": " ++ show errores          ++ "\n\n"
+            appendFile "pregunta1_b.txt" $ "\tpesos       " ++ nombre ++ ": " ++ show pesos             ++ "\n"
+            appendFile "pregunta1_b.txt" $ "\titeraciones " ++ nombre ++ ": " ++ show (length errores)  ++ "\n"
+            appendFile "pregunta1_b.txt" $ "\terrores     " ++ nombre ++ ": " ++ show (map (truncate . snd :: (Double,Double) -> Int) errores) ++ "\n\n"
 
 
 --------------------------------------------------------------------------------
