@@ -32,10 +32,11 @@ pregunta1_a = do
         appendFile "pregunta1_a.txt" $ "errores     " ++ nombre ++ ": " ++ show errores          ++ "\n\n"
         return (errores, nombre)
     -- grafica
-    toFile def "pregunta1_a.png" $ do
-        layout_title .= "Error para perceptrón"
-        forM_ erroress $ \(errores, nombre) -> do
-            plot (line nombre  [errores])
+    -- toFile def "pregunta1_a.png" $ do
+    --     layout_title .= "Error para perceptrón"
+    --     forM_ erroress $ \(errores, nombre) -> do
+    --         plot (line nombre $ map (zip [1..]) errores)
+    return ()
 
 -- 1.b)
 pregunta1_b :: IO ()
@@ -45,9 +46,9 @@ pregunta1_b = do
         appendFile "pregunta1_b.txt" $ "TASA: " ++ show t ++ "\n"
         forM [(conjunto_and, "AND"), (conjunto_or, "OR")] $ \(conjunto, nombre) -> do
             (pesos, errores) <- correrLector infoInicial { tasa = t } conjunto
-            appendFile "pregunta1_b.txt" $ "\tpesos       " ++ nombre ++ ": " ++ show pesos             ++ "\n"
-            appendFile "pregunta1_b.txt" $ "\titeraciones " ++ nombre ++ ": " ++ show (length errores)  ++ "\n"
-            appendFile "pregunta1_b.txt" $ "\terrores     " ++ nombre ++ ": " ++ show (map (truncate . snd :: (Double,Double) -> Int) errores) ++ "\n\n"
+            appendFile "pregunta1_b.txt" $ "\tpesos       " ++ nombre ++ ": " ++ show pesos                        ++ "\n"
+            appendFile "pregunta1_b.txt" $ "\titeraciones " ++ nombre ++ ": " ++ show (length errores)             ++ "\n"
+            appendFile "pregunta1_b.txt" $ "\terrores     " ++ nombre ++ ": " ++ show (map (map truncate) errores) ++ "\n\n"
 
 
 --------------------------------------------------------------------------------
@@ -64,10 +65,10 @@ type Lector = ReaderT Información IO
 
 --------------------------------------------------------------------------------
 
-correrLector :: Información -> Conjunto -> IO ([Double], [(Double, Double)])
-correrLector info = liftM (second func) . correrRecursivo 10 pesosIniciales [] info
-    where
-        func = zip [1..] . map sum . reverse
+correrLector :: Información -> Conjunto -> IO ([Double], [[Double]])
+correrLector info = liftM (second reverse) . correrRecursivo 10 pesosIniciales [] info
+    -- where
+    --     func = zip [1..] . map sum . reverse
 
 correrRecursivo :: Int -> [Double] -> [[Double]] -> Información -> Conjunto -> IO ([Double], [[Double]])
 correrRecursivo it pesos errores info conjunto =
@@ -128,15 +129,16 @@ perceptrón pesos conjunto = foldlM func (pesos, []) conjunto
                 -- (nuevo ws, error de este caso)
             return (zipWith (+) ws $ map ((*d) . fromBool) xs, e : errores)
 
-delta :: [Double] -> Conjunto -> Lector ([Double], [Double])
-delta pesos conjunto = foldlM func (pesos, []) conjunto
-    where
-        func :: ([Double], [Double]) -> ([Bool], Bool) -> Lector ([Double], [Double])
-        func (ws, errores) (xs, z) = do
-            (u, t) <- asks (umbral &&& tasa)
-            let s = sum $ zipWith (\x w -> fromBool x * w) xs ws
-                n = fromBool $ s > u
-                e = fromBool z - n
-                d = t * e
-                -- (nuevo ws, error de este caso)
-            return (zipWith (+) ws $ map ((*d) . fromBool) xs, e : errores)
+-- esto no sirve
+-- delta :: [Double] -> Conjunto -> Lector ([Double], [Double])
+-- delta pesos conjunto = foldlM func (pesos, []) conjunto
+--     where
+--         func :: ([Double], [Double]) -> ([Bool], Bool) -> Lector ([Double], [Double])
+--         func (ws, errores) (xs, z) = do
+--             (u, t) <- asks (umbral &&& tasa)
+--             let s = sum $ zipWith (\x w -> fromBool x * w) xs ws
+--                 n = fromBool $ s > u
+--                 e = fromBool z - n
+--                 d = t * e
+--                 -- (nuevo ws, error de este caso)
+--             return (zipWith (+) ws $ map ((*d) . fromBool) xs, e : errores)
