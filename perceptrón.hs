@@ -31,7 +31,7 @@ pregunta1_a = do
         appendFile "pregunta1_a.txt" $ "iteraciones " ++ nombre ++ ": " ++ show (length errores) ++ "\n"
         appendFile "pregunta1_a.txt" $ "errores     " ++ nombre ++ ": " ++ show errores          ++ "\n\n"
         return (errores, nombre)
-    -- Gráfica
+    -- grafica
     toFile def "pregunta1_a.png" $ do
         layout_title .= "Error para perceptrón"
         forM_ erroress $ \(errores, nombre) -> do
@@ -43,9 +43,8 @@ pregunta1_b = do
     doesFileExist "pregunta1_b.txt" >>= flip when (removeFile "pregunta1_b.txt")
     forM_ [0.01, 0.1, 0.2, 0.5, 0.99] $ \t -> do
         appendFile "pregunta1_b.txt" $ "TASA: " ++ show t ++ "\n"
-
         forM [(conjunto_and, "AND"), (conjunto_or, "OR")] $ \(conjunto, nombre) -> do
-            (pesos, errores) <- correrLector infoInicial conjunto
+            (pesos, errores) <- correrLector infoInicial { tasa = t } conjunto
             appendFile "pregunta1_b.txt" $ "\tpesos       " ++ nombre ++ ": " ++ show pesos            ++ "\n"
             appendFile "pregunta1_b.txt" $ "\titeraciones " ++ nombre ++ ": " ++ show (length errores) ++ "\n"
             appendFile "pregunta1_b.txt" $ "\terrores     " ++ nombre ++ ": " ++ show errores          ++ "\n\n"
